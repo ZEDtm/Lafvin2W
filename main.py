@@ -1,36 +1,40 @@
 from lafvin import Lafvin
 
-l = Lafvin("/dev/ttyUSB1")
+
+def go_dancing(lv: Lafvin) -> None:
+    lv.rotate_right(255)
+    lv.move_servo(0)
+    lv.rotate_left(255)
+    lv.move_servo(180)
+    lv.rotate_right(255)
+    lv.move_servo()
+    lv.stop()
 
 
-def go_dancing(l):
-    l.rotate_right(255)
-    l.move_servo(0)
-    l.rotate_left(255)
-    l.move_servo(180)
-    l.rotate_right(255)
-    l.move_servo()
-    l.stop()
-
-
-go_dancing(l)
-def ai_moving(l):
+def ai_moving(lv: Lafvin):
     while True:
-        if l.wall_forward():
-            left, right = l.wall_left_or_right()
+        if lv.wall_forward():
+            left, right = lv.wall_left_or_right()
             if left and right:
-                l.go_backward()
-                l.rotate_left()
-                l.stop()
+                lv.go_backward()
+                lv.rotate_left()
+                lv.stop()
             else:
                 if right:
-                    l.rotate_left()
-                    l.go_forward()
-                    l.stop()
+                    lv.rotate_left()
+                    lv.go_forward()
+                    lv.stop()
                 else:
-                    l.rotate_right()
-                    l.go_forward()
-                    l.stop()
+                    lv.rotate_right()
+                    lv.go_forward()
+                    lv.stop()
         else:
-            l.go_forward()
-            l.stop()
+            lv.go_forward()
+            lv.stop()
+
+
+if __name__ == "__main__":
+    # Example
+    lv = Lafvin("/dev/ttyUSB1")
+    go_dancing(lv)
+    ai_moving(lv)

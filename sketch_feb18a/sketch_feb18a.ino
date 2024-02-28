@@ -93,33 +93,39 @@ void loop() {
       int angle = Serial.parseInt();
       if (angle >= 0 && angle <= 180) {
         myservo.write(angle);
+        Serial.println(1);
       }
     } else if (command == 'f') {
       int iSpeed = Serial.parseInt();
       if (iSpeed >= 0 && iSpeed <= 255) {
         unsigned char speed = static_cast<unsigned char>(iSpeed);
         go_forward(speed);
+        Serial.println(1);
       }
     } else if (command == 'l') {
       int iSpeed = Serial.parseInt();
       if (iSpeed >= 0 && iSpeed <= 255) {
         unsigned char speed = static_cast<unsigned char>(iSpeed);
         rotate_left(speed);
+        Serial.println(1);
       }
     }  else if (command == 'r') {
       int iSpeed = Serial.parseInt();
       if (iSpeed >= 0 && iSpeed <= 255) {
         unsigned char speed = static_cast<unsigned char>(iSpeed);
         rotate_right(speed);
+        Serial.println(1);
       }
     }  else if (command == 'b') {
       int iSpeed = Serial.parseInt();
       if (iSpeed >= 0 && iSpeed <= 255) {
         unsigned char speed = static_cast<unsigned char>(iSpeed);
         go_backward(speed);
+        Serial.println(1);
       }
     } else if (command == 's') {
       stopp();
+      Serial.println(1);
     }
     while (Serial.available()) {
       Serial.read();

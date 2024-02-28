@@ -1,40 +1,22 @@
-from lafvin import Lafvin
+from lafvin import Lafvin, AsyncLafvin
+import asyncio
 
 
-def go_dancing(lv: Lafvin) -> None:
-    lv.rotate_right(255)
+def main():
+    lv = Lafvin("/dev/ttyUSB1")
+    print(lv.read_distance())
     lv.move_servo(0)
-    lv.rotate_left(255)
-    lv.move_servo(180)
-    lv.rotate_right(255)
-    lv.move_servo()
-    lv.stop()
+    lv.go_forward()
 
 
-def ai_moving(lv: Lafvin):
-    while True:
-        if lv.wall_forward():
-            left, right = lv.wall_left_or_right()
-            if left and right:
-                lv.go_backward()
-                lv.rotate_left()
-                lv.stop()
-            else:
-                if right:
-                    lv.rotate_left()
-                    lv.go_forward()
-                    lv.stop()
-                else:
-                    lv.rotate_right()
-                    lv.go_forward()
-                    lv.stop()
-        else:
-            lv.go_forward()
-            lv.stop()
+async def async_main():
+    lv = AsyncLafvin()
+    print(await lv.read_distance())
+    await lv.move_servo(0)
+    await lv.go_forward()
 
 
 if __name__ == "__main__":
     # Example
-    lv = Lafvin("/dev/ttyUSB1")
-    go_dancing(lv)
-    ai_moving(lv)
+    main()
+    asyncio.run(async_main)
